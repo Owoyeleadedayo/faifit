@@ -8,12 +8,12 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const images = [
   "/images/rename3.jpg",
   "/images/rename4.jpg",
-  "/images/rename5.jpg",
+  "/images/rename5.jpeg",
   "/images/rename6.jpg",
   "/images/rename7.jpg",
   "/images/rename8.jpg",
-  "/images/rename9.jpg",
-  "/images/rename10.jpg",
+  // "/images/rename9.jpg",
+  // "/images/rename10.jpg",
 ];
 
 const ImgCard = () => {

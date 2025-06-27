@@ -34,7 +34,7 @@ const Story = () => {
       >
         <Box width="100%" maxWidth="200px">
           <Image
-            src="/images/rename1.jpg"
+            src="/images/rename1.jpeg"
             alt="Story Image 1"
             width={200}
             height={100}
