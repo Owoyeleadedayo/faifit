@@ -29,13 +29,17 @@ const AboutBanner = () => {
         pt={"100px"}
         flexDirection={"column"}
       >
-        <Flex justifyContent={"center"} alignItems="center" pl={"100px"}>
+       <Flex width={'100%'} flexDirection={"column"} py="20px" borderY="1px solid #e5e5e5" gap={'10px'}>
+       <Flex justifyContent={"center"} alignItems="center" pl={"120px"}>
           <Text textAlign={"center"}>About</Text>
         </Flex>
-        <Text fontSize={"25px"} fontWeight={500} textTransform={"uppercase"}>
+        <Flex justifyContent={"center"} alignItems="center" pl={"80px"}>
+        <Text fontSize={"30px"} fontWeight={500} textTransform={"uppercase"}>
           Your essential guide to sports, chilling, and friendship.
         </Text>
-        <Flex mt={'10px'}>
+        </Flex>
+       </Flex>
+        <Flex mt={'20px'} px="20px">
           <ReactPhotoCollage {...setting} />
         </Flex>
       </Flex>

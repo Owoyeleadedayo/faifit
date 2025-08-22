@@ -95,29 +95,31 @@ const Navbar = () => {
           </Box>
         </Flex>
 
-        <Flex justifyContent={'space-between'} alignItems="center">
-        <IconButton
-          display={{ base: "flex", md: "none", lg: "none" }}
-          aria-label="Open menu"
-          icon={<Menu />}
-          variant="ghost"
-          color="black"
-          onClick={onOpen}
-        />
+        <Flex justifyContent={"space-between"} alignItems="center">
+          <IconButton
+            display={{ base: "flex", md: "none", lg: "none" }}
+            aria-label="Open menu"
+            icon={<Menu />}
+            variant="ghost"
+            color="black"
+            onClick={onOpen}
+          />
 
-        <Flex justifyContent={'center'} alignItems={'center'} gap={"5px"}>
-          <Text
+          <Link
+            href="/contact"
+            justifyContent={"center"}
+            alignItems={"center"}
             fontFamily="Sora"
             color={"#000"}
-            fontWeight={"600" }
-            display={{ base: "none", md: "flex"}}
+            fontWeight={"600"}
+            display={{ base: "none", md: "flex" }}
             fontSize={{ base: "14px", md: "16px" }}
             _hover={{ textDecoration: "none", color: "#000" }}
             textDecoration="none"
+            gap={"5px"}
           >
             Contact
-          </Text>
-        </Flex>
+          </Link>
         </Flex>
       </Flex>
 
@@ -125,26 +127,47 @@ const Navbar = () => {
         <DrawerOverlay />
         <DrawerContent bgColor="#FFFF">
           <DrawerCloseButton color="#000" />
-          <VStack align="start" spacing="20px" mt="80px" pl="20px" color="#000">
-            {menuItems.map((item, index) => (
-              <Link
-                key={index}
-                href={item.href}
-                fontSize="18px"
-                cursor="pointer"
-                onClick={onClose}
-                color={pathname === item.href ? "#000" : "#333"}
-                fontWeight={pathname === item.href ? "600" : "500"}
-                _hover={{
-                  fontWeight: "bold",
-                  textDecoration: "none",
-                  color: "#EC1B25",
-                }}
-              >
-                {item.name}
-              </Link>
-            ))}
-          </VStack>
+          <Flex flexDirection={"column"}>
+            <VStack
+              align="start"
+              spacing="20px"
+              mt="80px"
+              pl="20px"
+              color="#000"
+            >
+              {menuItems.map((item, index) => (
+                <Link
+                  key={index}
+                  href={item.href}
+                  fontSize="18px"
+                  cursor="pointer"
+                  onClick={onClose}
+                  color={pathname === item.href ? "#000" : "#333"}
+                  fontWeight={pathname === item.href ? "600" : "500"}
+                  _hover={{
+                    fontWeight: "bold",
+                    textDecoration: "none",
+                    color: "#EC1B25",
+                  }}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </VStack>
+            <Link
+              href="/contact"
+              fontFamily="Sora"
+              px={"20px"}
+              pt="20px"
+              color={"#333"}
+              fontWeight={"600"}
+              fontSize="18px"
+              _hover={{ textDecoration: "none", color: "#000" }}
+              textDecoration="none"
+            >
+              Contact
+            </Link>
+          </Flex>
         </DrawerContent>
       </Drawer>
     </>
