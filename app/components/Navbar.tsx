@@ -41,7 +41,7 @@ const Navbar = () => {
 
   const menuItems = [
     { name: "Home", href: "/" },
-    { name: "About", href: "/upload" },
+    { name: "About", href: "/about" },
     { name: "Store", href: "/library" },
   ];
 
@@ -71,6 +71,7 @@ const Navbar = () => {
               href={item.href}
               fontFamily="Sora"
               textDecoration="none"
+              gap={{ base: "20px", md: "30px", lg: "30px" }}
               color={pathname === item.href ? "#000" : "#333"}
               fontWeight={pathname === item.href ? "600" : "500"}
               fontSize={{ base: "14px", md: "16px" }}
@@ -94,8 +95,9 @@ const Navbar = () => {
           </Box>
         </Flex>
 
+        <Flex justifyContent={'space-between'} alignItems="center">
         <IconButton
-          display={{ base: "flex", md: "none" }}
+          display={{ base: "flex", md: "none", lg: "none" }}
           aria-label="Open menu"
           icon={<Menu />}
           variant="ghost"
@@ -108,12 +110,14 @@ const Navbar = () => {
             fontFamily="Sora"
             color={"#000"}
             fontWeight={"600" }
+            display={{ base: "none", md: "flex"}}
             fontSize={{ base: "14px", md: "16px" }}
             _hover={{ textDecoration: "none", color: "#000" }}
             textDecoration="none"
           >
             Contact
           </Text>
+        </Flex>
         </Flex>
       </Flex>
 
@@ -140,19 +144,6 @@ const Navbar = () => {
                 {item.name}
               </Link>
             ))}
-            <Button
-              variant="solid"
-              bgColor="#EC1B25"
-              py="5px"
-              px="15px"
-              borderRadius="60px"
-              color="white"
-              fontFamily="Sora"
-              fontSize="16px"
-              _hover={{ bgColor: "#d1121e" }}
-            >
-              Upload
-            </Button>
           </VStack>
         </DrawerContent>
       </Drawer>
