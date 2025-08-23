@@ -1,5 +1,6 @@
- "use client";
+"use client";
 import {
+  Badge,
   Box,
   Button,
   Drawer,
@@ -9,17 +10,26 @@ import {
   Flex,
   IconButton,
   Link,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import Logo from "../../public/images/faifitLogoNew.png";
-import { Menu } from "lucide-react";
-import { useEffect } from "react";
+import { MenuIcon, ShoppingCart } from "lucide-react";
+import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useCart } from "../context/CartContext";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 const NavBarforOthers = () => {
+  const { cart, removeFromCart } = useCart();
+
+  const itemCount = cart.reduce((sum: any, item: { quantity: any; }) => sum + item.quantity, 0);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const pathname = usePathname();
 
@@ -82,7 +92,7 @@ const NavBarforOthers = () => {
           <IconButton
             display={{ base: "flex", md: "none", lg: "none" }}
             aria-label="Open menu"
-            icon={<Menu />}
+            icon={<MenuIcon />}
             variant="ghost"
             color="black"
             onClick={onOpen}
@@ -103,6 +113,69 @@ const NavBarforOthers = () => {
           >
             Contact
           </Link>
+          <Menu>
+            <Box position="relative">
+              <MenuButton
+                as={IconButton}
+                icon={<ShoppingCart />}
+                variant="none"
+                size="lg"
+              />
+              {itemCount > 0 && (
+                <Badge
+                  colorScheme="red"
+                  borderRadius="full"
+                  position="absolute"
+                  top="0"
+                  right="0"
+                  px="2"
+                  fontSize="0.7em"
+                >
+                  {itemCount}
+                </Badge>
+              )}
+            </Box>
+
+            <MenuList p={3} minW="300px">
+              {cart.length === 0 ? (
+                <Text fontSize="14px" color="gray.500">
+                  Your cart is empty
+                </Text>
+              ) : (
+                <>
+                  {cart.map((item: { img: string | StaticImport; title: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; quantity: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; id: any; }, index: Key | null | undefined) => (
+                    <MenuItem key={index} p={2}>
+                      <Flex align="center" w="100%" justify="space-between">
+                        <Flex align="center" gap={2}>
+                          <Image
+                            src={item.img}
+                            alt={String(item.title)} 
+                            width={40}
+                            height={40}
+                            objectFit="cover"
+                          />
+                          <Text fontSize="14px">{item.title}</Text>
+                        </Flex>
+                        <Text fontSize="14px">x{item.quantity}</Text>
+                        <Button
+                          size="xs"
+                          colorScheme="red"
+                          onClick={() => removeFromCart(item.id)}
+                        >
+                          Remove
+                        </Button>
+                      </Flex>
+                    </MenuItem>
+                  ))}
+                  <Link href="/checkout">
+  <Button w="100%" mt={3} colorScheme="blackAlpha">
+    Go to Checkout
+  </Button>
+</Link>
+                </>
+              )}
+            </MenuList>
+          </Menu>
         </Flex>
       </Flex>
 
@@ -158,4 +231,3 @@ const NavBarforOthers = () => {
 };
 
 export default NavBarforOthers;
-

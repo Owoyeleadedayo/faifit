@@ -11,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
+import Footer from "../Footer";
 
 const ContactPage = () => {
   const storeInfo = [
@@ -299,6 +300,7 @@ const ContactPage = () => {
             </form>
           </Flex>
         </Flex>
+        <Footer />
       </Flex>
     </>
   );

@@ -2,6 +2,7 @@
 
 import { Flex, Grid, Text, Image } from "@chakra-ui/react";
 import { ReactPhotoCollage } from "react-photo-collage";
+import Footer from "../Footer";
 
 const AboutBanner = () => {
   const setting = {
@@ -61,9 +62,10 @@ const AboutBanner = () => {
             good and playing well go hand in hand.
           </Text>
         </Flex>
-        <Flex mt={"20px"} px="20px">
+        <Flex mt={"20px"} px="20px" py={'20px'}>
           <ReactPhotoCollage {...setting} />
         </Flex>
+        <Footer />
       </Flex>
     </>
   );

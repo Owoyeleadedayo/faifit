@@ -1,3 +1,6 @@
+"use client"
+
+import { useCart } from "@/app/context/CartContext";
 import {
   Button,
   Card,
@@ -9,35 +12,44 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { ShoppingCart } from "lucide-react";
+import Link from "next/link";
+import Footer from "../Footer";
 
 const StorePage = () => {
+  // const { addToCart } = useCart();
   const productCard = [
     {
+      id: 1,
       img: "/images/img2.jpg",
       title: "Oman wor tawa",
       price: "85,000 00",
     },
     {
+      id: 2,
       img: "/images/img6.jpg",
       title: "Oman wor tawa",
       price: "85,000 00",
     },
     {
+      id: 3,
       img: "/images/img11.jpg",
       title: "Oman wor tawa",
       price: "85,000 00",
     },
     {
+      id: 4,
       img: "/images/img12.jpg",
       title: "Oman wor tawa",
       price: "85,000 00",
     },
     {
+      id: 5,
       img: "/images/img13.jpg",
       title: "Oman wor tawa",
       price: "85,000 00",
     },
     {
+      id: 6,
       img: "/images/img14.jpg",
       title: "Oman wor tawa",
       price: "85,000 00",
@@ -87,7 +99,8 @@ const StorePage = () => {
             px={"30px"}
           >
             {productCard.map((item, index) => (
-              <Card key={index} maxW="md">
+              <Link key={index} href={`/details/${item.id}`} passHref>
+                <Card maxW="md" cursor={'pointer'}>
                 <Image
                   objectFit="cover"
                   src={item.img}
@@ -112,18 +125,23 @@ const StorePage = () => {
                           color="white"
                           fontSize="16px"
                           fontWeight={500}
-                          leftIcon={<ShoppingCart size={18} />}
+                          // leftIcon={<ShoppingCart size={18} />}
+                          // onClick={() =>
+                          //   addToCart({ id: item.id, title: item.title, img: item.img, price: item.price })
+                          // }
                         >
-                          Add to Cart
+                          Select Options
                         </Button>
                       </Flex>
                     </Flex>
                   </Flex>
                 </CardFooter>
               </Card>
+              </Link>
             ))}
           </Grid>
         </Flex>
+        <Footer />
       </Flex>
     </>
   );
