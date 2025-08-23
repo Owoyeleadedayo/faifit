@@ -46,10 +46,10 @@ const productCard = [
   },
 ];
 
-export default function ProductDetails() {
+export default function page() {
   const { addToCart } = useCart();
   const params = useParams();
-  const id = params?.id; // comes as string
+  const id = params?.id; 
 
   const product = productCard.find((item) => item.id === Number(id));
 
