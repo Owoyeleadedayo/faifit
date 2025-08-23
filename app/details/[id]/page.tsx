@@ -6,7 +6,6 @@ import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/app/context/CartContext";
 import NavBarforOthers from "@/app/components/NavBarforOthers";
 
-// Dummy product data (same as in StorePage)
 const productCard = [
   {
     id: 1,

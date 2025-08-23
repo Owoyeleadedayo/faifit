@@ -20,19 +20,19 @@ const StorePage = () => {
   const productCard = [
     {
       id: 1,
-      img: "/images/img2.jpg",
+      img: "/images/img16.jpg",
       title: "Oman wor tawa",
       price: "85,000 00",
     },
     {
       id: 2,
-      img: "/images/img6.jpg",
+      img: "/images/img17.jpg",
       title: "Oman wor tawa",
       price: "85,000 00",
     },
     {
       id: 3,
-      img: "/images/img11.jpg",
+      img: "/images/img15.jpg",
       title: "Oman wor tawa",
       price: "85,000 00",
     },
@@ -102,10 +102,10 @@ const StorePage = () => {
               <Link key={index} href={`/details/${item.id}`} passHref>
                 <Card maxW="md" cursor={'pointer'}>
                 <Image
-                  objectFit="cover"
+                  objectFit="contain"
                   src={item.img}
                   alt="Chakra UI"
-                  width={"500px"}
+                  width={"100%"}
                   height={"500px"}
                 />
 

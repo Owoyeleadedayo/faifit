@@ -19,7 +19,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Logo from "../../public/images/faifitLogoNew.png";
-import { MenuIcon, ShoppingCart } from "lucide-react";
+import { MenuIcon, ShoppingBag, ShoppingCart } from "lucide-react";
 import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -117,9 +117,9 @@ const NavBarforOthers = () => {
             <Box position="relative">
               <MenuButton
                 as={IconButton}
-                icon={<ShoppingCart />}
+                icon={<ShoppingBag />}
                 variant="none"
-                size="lg"
+                size="md"
               />
               {itemCount > 0 && (
                 <Badge
@@ -130,6 +130,7 @@ const NavBarforOthers = () => {
                   right="0"
                   px="2"
                   fontSize="0.7em"
+                  color={"black"}
                 >
                   {itemCount}
                 </Badge>
