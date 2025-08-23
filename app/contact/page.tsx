@@ -1,11 +1,11 @@
 import React from 'react'
 import ContactPage from '../components/ContactPage/ContactPage'
-import Navbar from '../components/Navbar'
+import NavBarforOthers from '../components/NavBarforOthers'
 
 const page = () => {
   return (
     <div>
-        <Navbar />
+        <NavBarforOthers />
         <ContactPage />
     </div>
   )

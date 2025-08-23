@@ -61,20 +61,10 @@ const Story = () => {
             fontSize={{ base: "16px", md: "16px", lg: "18px" }}
             textTransform="capitalize"
           >
-            One Vintage is a distinctive luxury brand founded by Simone Myson in
-            2010. This avant-garde label ingeniously revitalizes antique
-            textiles and relics, seamlessly weaving them into contemporary and
-            modern masterpieces.{" "}
-            <Text
-              as={"span"}
-              fontFamily="Montserrat"
-              fontWeight={500}
-              textDecoration={"underline"}
-              cursor={"pointer"}
-            >
-              {" "}
-              Show More
-            </Text>
+            The aim of our designs is to make you look and feel your best,
+            combining style and function to bring confidence to every game. Each
+            piece is thoughtfully crafted to enhance performance while ensuring
+            you step onto the court with elegance, comfort, and strength.
           </Text>
         </Flex>
       </Flex>

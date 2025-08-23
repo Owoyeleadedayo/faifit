@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 import {
   Box,
   Button,
@@ -19,25 +19,9 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-const Navbar = () => {
+const NavBarforOthers = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const pathname = usePathname();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const nav = document.getElementById("navBar");
-      if (window.scrollY >= 500) {
-        nav?.classList.add("scroll");
-      } else {
-        nav?.classList.remove("scroll");
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const menuItems = [
     { name: "Home", href: "/" },
@@ -48,9 +32,8 @@ const Navbar = () => {
   return (
     <>
       <Flex
-        id="navBar"
         width="100%"
-        bgColor="transparent"
+        bgColor="white"
         px={{ base: "20px", md: "30px", lg: "30px" }}
         py={{ base: "10px", md: "15px" }}
         justifyContent="space-between"
@@ -174,4 +157,5 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default NavBarforOthers;
+
