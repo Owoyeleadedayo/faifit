@@ -5,47 +5,69 @@ import { Flex, Image, Text, Button, Select } from "@chakra-ui/react";
 import { ShoppingCart } from "lucide-react";
 import { useCart } from "@/app/context/CartContext";
 import NavBarforOthers from "@/app/components/NavBarforOthers";
+import { useState } from "react";
+import Footer from "@/app/components/Footer";
+
 
 const productCard = [
   {
     id: 1,
-    img: "/images/img2.jpg",
+    img: "/images/img16.jpg",
     title: "Oman wor tawa",
-    price: "85,000 00",
+    price: 85000, // number ✅
   },
   {
     id: 2,
-    img: "/images/img6.jpg",
+    img: "/images/img17.jpg",
     title: "Oman wor tawa",
-    price: "85,000 00",
+    price: 85000,
   },
   {
     id: 3,
-    img: "/images/img11.jpg",
+    img: "/images/img15.jpg",
     title: "Oman wor tawa",
-    price: "85,000 00",
+    price: 85000,
   },
   {
     id: 4,
     img: "/images/img12.jpg",
     title: "Oman wor tawa",
-    price: "85,000 00",
+    price: 85000,
   },
   {
     id: 5,
     img: "/images/img13.jpg",
     title: "Oman wor tawa",
-    price: "85,000 00",
+    price: 85000,
   },
   {
     id: 6,
     img: "/images/img14.jpg",
     title: "Oman wor tawa",
-    price: "85,000 00",
+    price: 85000,
   },
 ];
 
+
 export default function page() {
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+
+  const handleAddToCart = () => {
+    if (!selectedColor || !selectedSize) return; 
+
+    addToCart({
+      id: product!.id,
+      title: product!.title,
+      img: product!.img,
+      price: product!.price,
+      color: selectedColor,
+      size: selectedSize,
+      quantity: 1, // ✅ added
+    });    
+  };
+
+
   const { addToCart } = useCart();
   const params = useParams();
   const id = params?.id; 
@@ -67,23 +89,23 @@ export default function page() {
       <NavBarforOthers />
       <Flex
         w="100%"
-        minH="100vh"
-        px="30px"
-        pt={"80px"}
+        minH="92vh"
+        px={{base: "20px", md:"30px"}}
+        pt={{base: "80px", md: "80px", lg: "80px"}}
         flexDirection={{ base: "column", md: "row" }}
-        gap="40px"
+        gap={{base: "20px", md:"40px", lg: "40px"}}
       >
         <Flex>
           <Image
             src={product.img}
             alt={product.title}
-            objectFit="contain"
+            objectFit={{base: "cover", md: "contain"}}
             w={{ base: "100%", md: "50%", lg: "500px" }}
-            h="600px"
+            h={{base: "100%", md: "600px", lg: "600px"}}
           />
         </Flex>
 
-        <Flex flexDirection="column" gap="10px" w={{ base: "100%", md: "50%" }} pt="50px">
+        <Flex flexDirection="column" gap="10px" w={{ base: "100%", md: "50%" }} pt={{base: '0px', md: "50px", lg: "50px"}}>
           <Flex
             flexDirection="column"
             w={{ base: "100%", md: "50%" }}
@@ -95,12 +117,12 @@ export default function page() {
               {product.title}
             </Text>
             <Text fontSize="16px" fontWeight="400">
-              ₦{product.price}
+            ₦{product.price.toLocaleString()}
             </Text>
           </Flex>
 
           <Flex width={"100%"} flexDirection={"column"} gap="10px">
-            <Flex width={"50%"} flexDirection={"column"} gap="5px">
+            <Flex width={{base: "100%", md: "50%", lg: "50%"}} flexDirection={"column"} gap="5px">
               <Text
                 fontSize="14px"
                 fontWeight="500"
@@ -120,6 +142,8 @@ export default function page() {
                   border: "1px solid black",
                 }}
                 placeholder="Select option"
+            value={selectedColor}
+            onChange={(e) => setSelectedColor(e.target.value)}
               >
                 <option value="pink">Pink</option>
                 <option value="blue">Blue</option>
@@ -127,7 +151,7 @@ export default function page() {
                 <option value="black">Black</option>
               </Select>
             </Flex>
-            <Flex width={"50%"} flexDirection={"column"} gap="5px">
+            <Flex width={{base: "100%", md: "50%", lg: "50%"}} flexDirection={"column"} gap="5px">
               <Text
                 fontSize="14px"
                 fontWeight="500"
@@ -147,6 +171,8 @@ export default function page() {
                   border: "1px solid black",
                 }}
                 placeholder="Select option"
+                value={selectedSize}
+            onChange={(e) => setSelectedSize(e.target.value)}
               >
                 <option value="s">S</option>
                 <option value="m">M</option>
@@ -161,22 +187,18 @@ export default function page() {
             color="white"
             fontSize="16px"
             fontWeight="500"
+            borderRadius={'none'}
             leftIcon={<ShoppingCart size={18} />}
             _hover={{ bg: "gray.800" }}
-            w="200px"
-            onClick={() =>
-              addToCart({
-                id: product.id,
-                title: product.title,
-                img: product.img,
-                price: product.price,
-              })
-            }
+            width={{base: "100%", md: "50%", lg: "50%"}}
+            onClick={handleAddToCart}
+            isDisabled={!selectedColor || !selectedSize}
           >
             Add to Cart
           </Button>
         </Flex>
       </Flex>
+      <Footer />
     </>
   );
 }

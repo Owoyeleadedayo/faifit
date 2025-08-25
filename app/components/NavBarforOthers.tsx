@@ -4,8 +4,10 @@ import {
   Box,
   Button,
   Drawer,
+  DrawerBody,
   DrawerCloseButton,
   DrawerContent,
+  DrawerHeader,
   DrawerOverlay,
   Flex,
   IconButton,
@@ -19,19 +21,37 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Logo from "../../public/images/faifitLogoNew.png";
-import { MenuIcon, ShoppingBag, ShoppingCart } from "lucide-react";
-import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect } from "react";
+import { MenuIcon, ShoppingBag, ShoppingCart, Trash2 } from "lucide-react";
+import {
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  useEffect,
+} from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useCart } from "../context/CartContext";
+import { CartItem, useCart } from "../context/CartContext";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 const NavBarforOthers = () => {
   const { cart, removeFromCart } = useCart();
+  const {
+    isOpen: isNavOpen,
+    onOpen: onNavOpen,
+    onClose: onNavClose,
+  } = useDisclosure();
 
-  const itemCount = cart.reduce((sum: any, item: { quantity: any; }) => sum + item.quantity, 0);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isCartOpen,
+    onOpen: onCartOpen,
+    onClose: onCartClose,
+  } = useDisclosure();
   const pathname = usePathname();
+
+  const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+
 
   const menuItems = [
     { name: "Home", href: "/" },
@@ -95,7 +115,7 @@ const NavBarforOthers = () => {
             icon={<MenuIcon />}
             variant="ghost"
             color="black"
-            onClick={onOpen}
+            onClick={onCartOpen}
           />
 
           <Link
@@ -113,74 +133,105 @@ const NavBarforOthers = () => {
           >
             Contact
           </Link>
-          <Menu>
-            <Box position="relative">
-              <MenuButton
-                as={IconButton}
-                icon={<ShoppingBag />}
-                variant="none"
-                size="md"
-              />
-              {itemCount > 0 && (
-                <Badge
-                  colorScheme="red"
-                  borderRadius="full"
-                  position="absolute"
-                  top="0"
-                  right="0"
-                  px="2"
-                  fontSize="0.7em"
-                  color={"black"}
-                >
-                  {itemCount}
-                </Badge>
-              )}
-            </Box>
+         <Flex>
+         <Box position="relative">
+        <IconButton
+          aria-label="Cart"
+          icon={<ShoppingBag />}
+          variant="ghost"
+          size="sm"
+          onClick={onCartOpen}
+        />
+        {itemCount > 0 && (
+          <Badge
+            colorScheme="red"
+            borderRadius="full"
+            position="absolute"
+            top="0"
+            right="0"
+            px="2"
+            fontSize="0.7em"
+            color="black"
+          >
+            {itemCount}
+          </Badge>
+        )}
+      </Box>
 
-            <MenuList p={3} minW="300px">
-              {cart.length === 0 ? (
-                <Text fontSize="14px" color="gray.500">
-                  Your cart is empty
-                </Text>
-              ) : (
-                <>
-                  {cart.map((item: { img: string | StaticImport; title: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; quantity: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; id: any; }, index: Key | null | undefined) => (
-                    <MenuItem key={index} p={2}>
-                      <Flex align="center" w="100%" justify="space-between">
-                        <Flex align="center" gap={2}>
-                          <Image
-                            src={item.img}
-                            alt={String(item.title)} 
-                            width={40}
-                            height={40}
-                            objectFit="cover"
-                          />
-                          <Text fontSize="14px">{item.title}</Text>
-                        </Flex>
-                        <Text fontSize="14px">x{item.quantity}</Text>
-                        <Button
-                          size="xs"
-                          colorScheme="red"
-                          onClick={() => removeFromCart(item.id)}
-                        >
-                          Remove
-                        </Button>
-                      </Flex>
-                    </MenuItem>
-                  ))}
-                  <Link href="/checkout">
-  <Button w="100%" mt={3} colorScheme="blackAlpha">
-    Go to Checkout
-  </Button>
-</Link>
-                </>
-              )}
-            </MenuList>
-          </Menu>
+      {/* Drawer */}
+      <Drawer isOpen={isCartOpen} placement="right" onClose={onCartClose} size="sm">
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerCloseButton />
+          <DrawerHeader>Your Cart</DrawerHeader>
+
+          <DrawerBody>
+            {cart.length === 0 ? (
+              <Text fontSize="14px" color="gray.500">
+                Your cart is empty
+              </Text>
+            ) : (
+              <>
+                {cart.map((item: CartItem, index) => (
+                  <Flex
+                    key={index}
+                    align="center"
+                    gap={3}
+                    borderBottom="1px solid #eee"
+                    pb={3}
+                    mb={3}
+                  >
+                    <Image
+                      src={item.img}
+                      alt={String(item.title)}
+                      width={60}
+                      height={60}
+                      style={{ objectFit: "cover", borderRadius: "8px" }}
+                    />
+
+                    <Flex flexDirection="column" flex="1">
+                      <Text fontSize="14px" fontWeight="500">
+                        {item.title}
+                      </Text>
+                      <Text fontSize="14px" color="gray.600">
+                        ₦{item.price}
+                      </Text>
+                      <Text fontSize="14px" color="gray.600">
+                        Color: {item.color}
+                      </Text>
+                      <Text fontSize="14px" color="gray.600">
+                        Size: {item.size}
+                      </Text>
+                      <Text fontSize="14px" color="gray.600">
+                        Qty: {item.quantity}
+                      </Text>
+                    </Flex>
+
+                    <Trash2
+                      className="cursor-pointer"
+                      onClick={() =>
+                        removeFromCart(item.id, item.color, item.size)
+                      }
+                    />
+                  </Flex>
+                ))}
+
+                {/* Checkout button */}
+                <Link href="/checkout">
+                  <Button w="100%" mt={3} colorScheme="blackAlpha">
+                    Go to Checkout
+                  </Button>
+                </Link>
+              </>
+            )}
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
+         </Flex>
         </Flex>
       </Flex>
 
-      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+      <Drawer isOpen={isNavOpen} placement="right" onClose={onNavClose}>
         <DrawerOverlay />
         <DrawerContent bgColor="#FFFF">
           <DrawerCloseButton color="#000" />
@@ -198,7 +249,7 @@ const NavBarforOthers = () => {
                   href={item.href}
                   fontSize="18px"
                   cursor="pointer"
-                  onClick={onClose}
+                  onClick={onNavClose}
                   color={pathname === item.href ? "#000" : "#333"}
                   fontWeight={pathname === item.href ? "600" : "500"}
                   _hover={{

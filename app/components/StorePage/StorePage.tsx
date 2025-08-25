@@ -16,7 +16,6 @@ import Link from "next/link";
 import Footer from "../Footer";
 
 const StorePage = () => {
-  // const { addToCart } = useCart();
   const productCard = [
     {
       id: 1,
