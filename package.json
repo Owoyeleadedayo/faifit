@@ -15,6 +15,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@types/styled-components": "^5.1.34",
+    "antd": "^5.27.1",
     "framer-motion": "^12.19.1",
     "lucide-react": "^0.523.0",
     "next": "15.3.4",

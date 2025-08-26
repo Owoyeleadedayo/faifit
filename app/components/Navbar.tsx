@@ -4,8 +4,10 @@ import {
   Box,
   Button,
   Drawer,
+  DrawerBody,
   DrawerCloseButton,
   DrawerContent,
+  DrawerHeader,
   DrawerOverlay,
   Flex,
   IconButton,
@@ -19,35 +21,34 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import Logo from "../../public/images/faifitLogoNew.png";
-import { MenuIcon, ShoppingCart } from "lucide-react";
+import { MenuIcon, ShoppingBag, ShoppingCart, Trash2 } from "lucide-react";
 import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useCart } from "../context/CartContext";
+import { CartItem, useCart } from "../context/CartContext";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 const Navbar = () => {
   const { cart, removeFromCart } = useCart();
+  const {
+    isOpen: isNavOpen,
+    onOpen: onNavOpen,
+    onClose: onNavClose,
+  } = useDisclosure();
 
-  const itemCount = cart.reduce((sum: any, item: { quantity: any; }) => sum + item.quantity, 0);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: isCartOpen,
+    onOpen: onCartOpen,
+    onClose: onCartClose,
+  } = useDisclosure();
   const pathname = usePathname();
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const nav = document.getElementById("navBar");
-      if (window.scrollY >= 500) {
-        nav?.classList.add("scroll");
-      } else {
-        nav?.classList.remove("scroll");
-      }
-    };
+  const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  const subtotal = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
 
   const menuItems = [
     { name: "Home", href: "/" },
@@ -112,7 +113,7 @@ const Navbar = () => {
             icon={<MenuIcon />}
             variant="ghost"
             color="black"
-            onClick={onOpen}
+            onClick={onNavOpen}
           />
 
           <Link
@@ -130,13 +131,14 @@ const Navbar = () => {
           >
             Contact
           </Link>
-          <Menu>
+          <Flex>
             <Box position="relative">
-              <MenuButton
-                as={IconButton}
-                icon={<ShoppingCart />}
+              <IconButton
+                aria-label="Cart"
+                icon={<ShoppingBag />}
                 variant="none"
-                size="lg"
+                size="sm"
+                onClick={onCartOpen}
               />
               {itemCount > 0 && (
                 <Badge
@@ -147,56 +149,233 @@ const Navbar = () => {
                   right="0"
                   px="2"
                   fontSize="0.7em"
+                  color="black"
                 >
                   {itemCount}
                 </Badge>
               )}
             </Box>
 
-            <MenuList p={3} minW="300px">
-              {cart.length === 0 ? (
-                <Text fontSize="14px" color="gray.500">
-                  Your cart is empty
-                </Text>
-              ) : (
-                <>
-                  {cart.map((item: { img: string | StaticImport; title: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; quantity: string | number | bigint | boolean | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | ReactPortal | Promise<string | number | bigint | boolean | ReactPortal | ReactElement<unknown, string | JSXElementConstructor<any>> | Iterable<ReactNode> | null | undefined> | null | undefined; id: any; }, index: Key | null | undefined) => (
-                    <MenuItem key={index} p={2}>
-                      <Flex align="center" w="100%" justify="space-between">
-                        <Flex align="center" gap={2}>
-                          <Image
-                            src={item.img}
-                            alt={String(item.title)} 
-                            width={40}
-                            height={40}
-                            objectFit="cover"
-                          />
-                          <Text fontSize="14px">{item.title}</Text>
+            {/* Drawer */}
+            <Drawer
+              isOpen={isCartOpen}
+              placement="right"
+              onClose={onCartClose}
+              size="sm"
+            >
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Your Cart</DrawerHeader>
+
+                <DrawerBody>
+                  {cart.length === 0 ? (
+                    <Flex
+                      h="100%"
+                      justifyContent={"center"}
+                      alignItems="center"
+                      flexDirection={"column"}
+                      gap="10px"
+                    >
+                      <ShoppingBag size={40} />
+                      <Text
+                        fontSize="16px"
+                        color="black"
+                        textTransform={"uppercase"}
+                      >
+                        No products in the cart.
+                      </Text>
+                    </Flex>
+                  ) : (
+                    <>
+                      <Flex
+                        h="100%"
+                        flexDirection={"column"}
+                        justifyContent="space-between"
+                      >
+                        <Flex flexDirection={"column"}>
+                          {cart.map((item: CartItem, index) => (
+                            <Flex
+                              key={index}
+                              align="center"
+                              gap={3}
+                              borderBottom="1px solid #e5e5e5"
+                              pb={3}
+                              mb={3}
+                            >
+                              <Flex w={"100%"} gap={"20px"}>
+                                <Image
+                                  src={item.img}
+                                  alt={String(item.title)}
+                                  width={100}
+                                  height={80}
+                                  style={{
+                                    objectFit: "cover",
+                                    borderRadius: "4px",
+                                  }}
+                                />
+                                <Flex
+                                  w={"100%"}
+                                  flexDirection={"column"}
+                                  gap="5px"
+                                >
+                                  <Flex
+                                    w={"100%"}
+                                    justifyContent={"space-between"}
+                                    alignItems="center"
+                                  >
+                                    <Flex>
+                                      <Text fontSize="14px" fontWeight="600">
+                                        {item.title}
+                                      </Text>
+                                    </Flex>
+
+                                    <Flex>
+                                      <Trash2
+                                        className="cursor-pointer"
+                                        onClick={() =>
+                                          removeFromCart(
+                                            item.id,
+                                            item.color,
+                                            item.size
+                                          )
+                                        }
+                                        size={18}
+                                        cursor="pointer"
+                                      />
+                                    </Flex>
+                                  </Flex>
+                                  <Flex>
+                                    <Text
+                                      fontSize="16px"
+                                      color="black"
+                                      fontWeight={400}
+                                      textTransform="capitalize"
+                                    >
+                                      Color: {item.color}
+                                    </Text>
+                                  </Flex>
+                                  <Flex>
+                                    <Text
+                                      fontSize="16px"
+                                      color="black"
+                                      fontWeight={400}
+                                      textTransform="capitalize"
+                                    >
+                                      Size: {item.size}
+                                    </Text>
+                                  </Flex>
+
+                                  <Flex
+                                    justifyContent={"space-between"}
+                                    alignItems="center"
+                                  >
+                                    <Flex
+                                      py={"5px"}
+                                      px={"15px"}
+                                      border="1px solid #000"
+                                    >
+                                      <Text fontSize="14px" color="#000">
+                                        {item.quantity}
+                                      </Text>
+                                    </Flex>
+                                    <Flex>
+                                      <Text
+                                        fontSize="14px"
+                                        color="#000"
+                                        fontWeight={500}
+                                      >
+                                        ₦{item.price}
+                                      </Text>
+                                    </Flex>
+                                  </Flex>
+                                </Flex>
+                              </Flex>
+                            </Flex>
+                          ))}
                         </Flex>
-                        <Text fontSize="14px">x{item.quantity}</Text>
-                        <Button
-                          size="xs"
-                          colorScheme="red"
-                          onClick={() => removeFromCart(item.id)}
+                        <Flex
+                          flexDirection={"column"}
+                          borderTop="1px solid #e5e5e5"
+                          py={"10px"}
+                          gap="20px"
                         >
-                          Remove
-                        </Button>
+                          <Flex>
+                            <Text
+                              fontSize={"16px"}
+                              fontWeight={400}
+                              textTransform="uppercase"
+                            >
+                              subtotal:{" "}
+                              <Text
+                                as={"span"}
+                                fontSize={"16px"}
+                                fontWeight={500}
+                              >
+                                ₦{subtotal.toLocaleString()}
+                              </Text>
+                            </Text>
+                          </Flex>
+                          <Flex
+                            width="100%"
+                            justifyContent={"start"}
+                            alignItems="center"
+                            flexDirection={{
+                              base: "column",
+                              md: "row",
+                              lg: "row",
+                            }}
+                            gap={"20px"}
+                          >
+                            <Link href="/checkout">
+                              <Button
+                                w="180px"
+                                h={"50px"}
+                                mt={3}
+                                bg="#000"
+                                border={"1px solid #000"}
+                                color="white"
+                                fontSize="16px"
+                                fontWeight="500"
+                                textTransform={"uppercase"}
+                                borderRadius={"none"}
+                                _hover={{ bg: "gray.800" }}
+                                boxShadow="lg"
+                              >
+                                Checkout
+                              </Button>
+                            </Link>
+                            <Link href="/checkout">
+                              <Button
+                                w="180px"
+                                h={"50px"}
+                                mt={3}
+                                bg="white"
+                                color="#000"
+                                border={"1px solid #000"}
+                                fontSize="16px"
+                                fontWeight="500"
+                                textTransform={"uppercase"}
+                                borderRadius={"none"}
+                                _hover={{ bg: "gray.800" }}
+                                boxShadow="lg"
+                              >
+                                view cart
+                              </Button>
+                            </Link>
+                          </Flex>
+                        </Flex>
                       </Flex>
-                    </MenuItem>
-                  ))}
-                  <Link href="/checkout">
-  <Button w="100%" mt={3} colorScheme="blackAlpha">
-    Go to Checkout
-  </Button>
-</Link>
-                </>
-              )}
-            </MenuList>
-          </Menu>
+                    </>
+                  )}
+                </DrawerBody>
+              </DrawerContent>
+            </Drawer>
+          </Flex>
         </Flex>
       </Flex>
 
-      <Drawer isOpen={isOpen} placement="right" onClose={onClose}>
+      <Drawer isOpen={isNavOpen} placement="right" onClose={onNavClose}>
         <DrawerOverlay />
         <DrawerContent bgColor="#FFFF">
           <DrawerCloseButton color="#000" />
@@ -214,7 +393,7 @@ const Navbar = () => {
                   href={item.href}
                   fontSize="18px"
                   cursor="pointer"
-                  onClick={onClose}
+                  onClick={onNavClose}
                   color={pathname === item.href ? "#000" : "#333"}
                   fontWeight={pathname === item.href ? "600" : "500"}
                   _hover={{

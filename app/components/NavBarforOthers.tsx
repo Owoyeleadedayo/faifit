@@ -52,6 +52,10 @@ const NavBarforOthers = () => {
 
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
+  const subtotal = cart.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
 
   const menuItems = [
     { name: "Home", href: "/" },
@@ -133,101 +137,247 @@ const NavBarforOthers = () => {
           >
             Contact
           </Link>
-         <Flex>
-         <Box position="relative">
-        <IconButton
-          aria-label="Cart"
-          icon={<ShoppingBag />}
-          variant="ghost"
-          size="sm"
-          onClick={onCartOpen}
-        />
-        {itemCount > 0 && (
-          <Badge
-            colorScheme="red"
-            borderRadius="full"
-            position="absolute"
-            top="0"
-            right="0"
-            px="2"
-            fontSize="0.7em"
-            color="black"
-          >
-            {itemCount}
-          </Badge>
-        )}
-      </Box>
+          <Flex>
+            <Box position="relative">
+              <IconButton
+                aria-label="Cart"
+                icon={<ShoppingBag />}
+                variant="none"
+                size="sm"
+                onClick={onCartOpen}
+              />
+              {itemCount > 0 && (
+                <Badge
+                  colorScheme="red"
+                  borderRadius="full"
+                  position="absolute"
+                  top="0"
+                  right="0"
+                  px="2"
+                  fontSize="0.7em"
+                  color="black"
+                >
+                  {itemCount}
+                </Badge>
+              )}
+            </Box>
 
-      {/* Drawer */}
-      <Drawer isOpen={isCartOpen} placement="right" onClose={onCartClose} size="sm">
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerHeader>Your Cart</DrawerHeader>
+            {/* Drawer */}
+            <Drawer
+              isOpen={isCartOpen}
+              placement="right"
+              onClose={onCartClose}
+              size="sm"
+            >
+              <DrawerOverlay />
+              <DrawerContent>
+                <DrawerCloseButton />
+                <DrawerHeader>Your Cart</DrawerHeader>
 
-          <DrawerBody>
-            {cart.length === 0 ? (
-              <Text fontSize="14px" color="gray.500">
-                Your cart is empty
-              </Text>
-            ) : (
-              <>
-                {cart.map((item: CartItem, index) => (
-                  <Flex
-                    key={index}
-                    align="center"
-                    gap={3}
-                    borderBottom="1px solid #eee"
-                    pb={3}
-                    mb={3}
-                  >
-                    <Image
-                      src={item.img}
-                      alt={String(item.title)}
-                      width={60}
-                      height={60}
-                      style={{ objectFit: "cover", borderRadius: "8px" }}
-                    />
-
-                    <Flex flexDirection="column" flex="1">
-                      <Text fontSize="14px" fontWeight="500">
-                        {item.title}
-                      </Text>
-                      <Text fontSize="14px" color="gray.600">
-                        ₦{item.price}
-                      </Text>
-                      <Text fontSize="14px" color="gray.600">
-                        Color: {item.color}
-                      </Text>
-                      <Text fontSize="14px" color="gray.600">
-                        Size: {item.size}
-                      </Text>
-                      <Text fontSize="14px" color="gray.600">
-                        Qty: {item.quantity}
+                <DrawerBody>
+                  {cart.length === 0 ? (
+                    <Flex
+                      h="100%"
+                      justifyContent={"center"}
+                      alignItems="center"
+                      flexDirection={"column"}
+                      gap="10px"
+                    >
+                      <ShoppingBag size={40} />
+                      <Text
+                        fontSize="16px"
+                        color="black"
+                        textTransform={"uppercase"}
+                      >
+                        No products in the cart.
                       </Text>
                     </Flex>
+                  ) : (
+                    <>
+                      <Flex
+                        h="100%"
+                        flexDirection={"column"}
+                        justifyContent="space-between"
+                      >
+                        <Flex flexDirection={"column"}>
+                          {cart.map((item: CartItem, index) => (
+                            <Flex
+                              key={index}
+                              align="center"
+                              gap={3}
+                              borderBottom="1px solid #e5e5e5"
+                              pb={3}
+                              mb={3}
+                            >
+                              <Flex w={"100%"} gap={"20px"}>
+                                <Image
+                                  src={item.img}
+                                  alt={String(item.title)}
+                                  width={100}
+                                  height={80}
+                                  style={{
+                                    objectFit: "cover",
+                                    borderRadius: "4px",
+                                  }}
+                                />
+                                <Flex
+                                  w={"100%"}
+                                  flexDirection={"column"}
+                                  gap="5px"
+                                >
+                                  <Flex
+                                    w={"100%"}
+                                    justifyContent={"space-between"}
+                                    alignItems="center"
+                                  >
+                                    <Flex>
+                                      <Text fontSize="14px" fontWeight="600">
+                                        {item.title}
+                                      </Text>
+                                    </Flex>
 
-                    <Trash2
-                      className="cursor-pointer"
-                      onClick={() =>
-                        removeFromCart(item.id, item.color, item.size)
-                      }
-                    />
-                  </Flex>
-                ))}
+                                    <Flex>
+                                      <Trash2
+                                        className="cursor-pointer"
+                                        onClick={() =>
+                                          removeFromCart(
+                                            item.id,
+                                            item.color,
+                                            item.size
+                                          )
+                                        }
+                                        size={18}
+                                        cursor="pointer"
+                                      />
+                                    </Flex>
+                                  </Flex>
+                                  <Flex>
+                                    <Text
+                                      fontSize="16px"
+                                      color="black"
+                                      fontWeight={400}
+                                      textTransform="capitalize"
+                                    >
+                                      Color: {item.color}
+                                    </Text>
+                                  </Flex>
+                                  <Flex>
+                                    <Text
+                                      fontSize="16px"
+                                      color="black"
+                                      fontWeight={400}
+                                      textTransform="capitalize"
+                                    >
+                                      Size: {item.size}
+                                    </Text>
+                                  </Flex>
 
-                {/* Checkout button */}
-                <Link href="/checkout">
-                  <Button w="100%" mt={3} colorScheme="blackAlpha">
-                    Go to Checkout
-                  </Button>
-                </Link>
-              </>
-            )}
-          </DrawerBody>
-        </DrawerContent>
-      </Drawer>
-         </Flex>
+                                  <Flex
+                                    justifyContent={"space-between"}
+                                    alignItems="center"
+                                  >
+                                    <Flex
+                                      py={"5px"}
+                                      px={"15px"}
+                                      border="1px solid #000"
+                                    >
+                                      <Text fontSize="14px" color="#000">
+                                        {item.quantity}
+                                      </Text>
+                                    </Flex>
+                                    <Flex>
+                                      <Text
+                                        fontSize="14px"
+                                        color="#000"
+                                        fontWeight={500}
+                                      >
+                                        ₦{item.price}
+                                      </Text>
+                                    </Flex>
+                                  </Flex>
+                                </Flex>
+                              </Flex>
+                            </Flex>
+                          ))}
+                        </Flex>
+                        <Flex
+                          flexDirection={"column"}
+                          borderTop="1px solid #e5e5e5"
+                          py={"10px"}
+                          gap="20px"
+                        >
+                          <Flex>
+                            <Text
+                              fontSize={"16px"}
+                              fontWeight={400}
+                              textTransform="uppercase"
+                            >
+                              subtotal:{" "}
+                              <Text
+                                as={"span"}
+                                fontSize={"16px"}
+                                fontWeight={500}
+                              >
+                                ₦{subtotal.toLocaleString()}
+                              </Text>
+                            </Text>
+                          </Flex>
+                          <Flex
+                            width="100%"
+                            justifyContent={"start"}
+                            alignItems="center"
+                            flexDirection={{
+                              base: "column",
+                              md: "row",
+                              lg: "row",
+                            }}
+                            gap={"20px"}
+                          >
+                            <Link href="/checkout">
+                              <Button
+                                w="180px"
+                                h={"50px"}
+                                mt={3}
+                                bg="#000"
+                                border={"1px solid #000"}
+                                color="white"
+                                fontSize="16px"
+                                fontWeight="500"
+                                textTransform={"uppercase"}
+                                borderRadius={"none"}
+                                _hover={{ bg: "gray.800" }}
+                                boxShadow="lg"
+                              >
+                                Checkout
+                              </Button>
+                            </Link>
+                            <Link href="/checkout">
+                              <Button
+                                w="180px"
+                                h={"50px"}
+                                mt={3}
+                                bg="white"
+                                color="#000"
+                                border={"1px solid #000"}
+                                fontSize="16px"
+                                fontWeight="500"
+                                textTransform={"uppercase"}
+                                borderRadius={"none"}
+                                _hover={{ bg: "gray.800" }}
+                                boxShadow="lg"
+                              >
+                                view cart
+                              </Button>
+                            </Link>
+                          </Flex>
+                        </Flex>
+                      </Flex>
+                    </>
+                  )}
+                </DrawerBody>
+              </DrawerContent>
+            </Drawer>
+          </Flex>
         </Flex>
       </Flex>
 
