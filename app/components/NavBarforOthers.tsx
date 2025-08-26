@@ -331,11 +331,11 @@ const NavBarforOthers = () => {
                               md: "row",
                               lg: "row",
                             }}
-                            gap={"20px"}
+                            gap={{base: "10px", md:"20px", lg:"20px"}}
                           >
                             <Link href="/checkout">
                               <Button
-                                w="180px"
+                                w={{base: "280px", md:"180px", lg:"180px"}}
                                 h={"50px"}
                                 mt={3}
                                 bg="#000"
@@ -353,7 +353,7 @@ const NavBarforOthers = () => {
                             </Link>
                             <Link href="/checkout">
                               <Button
-                                w="180px"
+                                w={{base: "280px", md:"180px", lg:"180px"}}
                                 h={"50px"}
                                 mt={3}
                                 bg="white"
