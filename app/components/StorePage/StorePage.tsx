@@ -19,7 +19,7 @@ const StorePage = () => {
   const productCard = [
     {
       id: 1,
-      img: "/images/img111.jpg",
+      img: "/images/img100.jpg",
       title: "Oman wor tawa",
       price: "85,000 00",
     },
