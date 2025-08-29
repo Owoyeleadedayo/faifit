@@ -58,7 +58,7 @@ const Banner = () => {
       <Text
         fontFamily="Montserrat"
         fontSize={{ base: "xl", sm: "xl", md: "xl", lg: "xl" }} // Smaller on mobile
-        fontWeight={400}
+        fontWeight={500}
         color="white"
         textAlign="center"
         px={{ base: "20px", md: "0" }}
