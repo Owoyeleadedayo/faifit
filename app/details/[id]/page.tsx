@@ -20,7 +20,7 @@ import { InputNumber } from "antd";
 const productCard = [
   {
     id: 1,
-    img: "/images/img100.jpg",
+    img: "/images/img13.jpg",
     title: "Oman wor tawa",
     price: 85000,
   },
@@ -44,7 +44,7 @@ const productCard = [
   },
   {
     id: 5,
-    img: "/images/img13.jpg",
+    img: "/images/img200.jpg",
     title: "Oman wor tawa",
     price: 85000,
   },
