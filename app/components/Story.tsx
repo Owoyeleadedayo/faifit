@@ -61,10 +61,10 @@ const Story = () => {
             fontSize={{ base: "16px", md: "16px", lg: "18px" }}
             textTransform="capitalize"
           >
-            The aim of our designs is to make you look and feel your best,
-            combining style and function to bring confidence to every game. Each
-            piece is thoughtfully crafted to enhance performance while ensuring
-            you step onto the court with elegance, comfort, and strength.
+            Our aim, Is to make you look good and confident , while Combining
+            Style and tennis to Every Game. Each Piece Is Thoughtfully Crafted
+            To Enhance high Performance While Stepping into The Court With
+            Elegance, Comfort, And Strength.
           </Text>
         </Flex>
       </Flex>
