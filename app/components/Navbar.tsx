@@ -12,21 +12,23 @@ import {
   Flex,
   IconButton,
   Link,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
   Text,
   useDisclosure,
   VStack,
 } from "@chakra-ui/react";
 import Logo from "../../public/images/faifitLogoNew.png";
 import { MenuIcon, ShoppingBag, ShoppingCart, Trash2 } from "lucide-react";
-import { JSXElementConstructor, Key, ReactElement, ReactNode, ReactPortal, useEffect } from "react";
+import {
+  JSXElementConstructor,
+  Key,
+  ReactElement,
+  ReactNode,
+  ReactPortal,
+  useEffect,
+} from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { CartItem, useCart } from "../context/CartContext";
-import { StaticImport } from "next/dist/shared/lib/get-img-props";
 
 const Navbar = () => {
   const { cart, removeFromCart } = useCart();

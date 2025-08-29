@@ -24,8 +24,23 @@ export type CartContextType = {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  // ✅ Initialize cart directly from localStorage (only in browser)
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("cart");
+      return saved ? JSON.parse(saved) : [];
+    }
+    return [];
+  });
+
   const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // ✅ Save to localStorage whenever cart changes
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+  }, [cart]);
 
   const addToCart = (item: CartItem) => {
     setCart((prev) => {
@@ -49,7 +64,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
     });
   };
-  
 
   const removeFromCart = (id: number, color: string, size: string) => {
     setCart((prev) =>
@@ -58,25 +72,26 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       )
     );
   };
-  
 
   const clearCart = () => {
     setCart([]);
   };
 
-  const openCart = () => setIsCartOpen(true);   // ✅
-  const closeCart = () => setIsCartOpen(false); // ✅
+  const openCart = () => setIsCartOpen(true);
+  const closeCart = () => setIsCartOpen(false);
 
   return (
-    <CartContext.Provider value={{
-      cart,
-      addToCart,
-      removeFromCart,
-      clearCart,
-      openCart,
-      closeCart,
-      isCartOpen,
-    }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        clearCart,
+        openCart,
+        closeCart,
+        isCartOpen,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

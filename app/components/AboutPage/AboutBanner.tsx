@@ -20,11 +20,11 @@ const AboutBanner = () => {
         borderY="1px solid #e5e5e5"
         gap="10px"
       >
-        <Flex justifyContent="center" alignItems="center" pl="120px">
+        <Flex justifyContent="center" alignItems="center" pl={{base: 0, md: "100px", lg: "120px"}}>
           <Text textAlign="center">About</Text>
         </Flex>
-        <Flex justifyContent="center" alignItems="center" pl="80px">
-          <Text fontSize="30px" fontWeight={500} textTransform="uppercase">
+        <Flex justifyContent="center" alignItems="center" pl={{base: 0, md: "80px", lg:"80px"}}>
+          <Text textAlign="center" fontSize="30px" fontWeight={500} textTransform="uppercase">
             Your essential guide to sports, chilling, and friendship.
           </Text>
         </Flex>
@@ -36,10 +36,11 @@ const AboutBanner = () => {
         justifyContent="center"
         alignItems="center"
         py="20px"
-        pl="80px"
+        px={{base: '20px'}}
+        // pl={{base: 0, md: "80px", lg:"80px"}}
         borderBottom="1px solid #e5e5e5"
       >
-        <Text width="800px" fontSize="18px" fontWeight={400}>
+        <Text textAlign="center" width={{base: "100%", md:"850px", lg: "850px"}} fontSize="18px" fontWeight={400}>
           The aim of our designs is to go beyond clothing; it is to create
           pieces that not only make you look good but also instill a sense of
           confidence and empowerment every time you step onto the court. Each

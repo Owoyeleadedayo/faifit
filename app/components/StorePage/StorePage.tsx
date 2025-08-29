@@ -94,7 +94,7 @@ const StorePage = () => {
               md: "repeat(2, 1fr)",
               lg: "repeat(3, 1fr)",
             }}
-            gap={{ base: "10px", md: "20px", lg: "30px" }}
+            gap="30px"
             px={"30px"}
           >
             {productCard.map((item, index) => (
@@ -105,7 +105,7 @@ const StorePage = () => {
                   src={item.img}
                   alt="Chakra UI"
                   width={"100%"}
-                  height={"500px"}
+                  height={"100%"}
                 />
 
                 <CardFooter justify="space-between" flexWrap="wrap">
