@@ -3,14 +3,9 @@ const nextConfig = {
   images: {
     domains: ["twzaxpwgrivrbhirhbpk.supabase.co"],
   },
+  // Temporarily disable redirects to break the loop
   async redirects() {
-    return [
-      {
-        source: '/:path((?!details).*)', // Match all paths except those starting with /details
-        destination: '/',
-        permanent: false,
-      },
-    ];
+    return [];
   },
 };
 
