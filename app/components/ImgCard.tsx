@@ -11,9 +11,7 @@ const images = [
   "/images/rename5.jpeg",
   "/images/rename6.jpg",
   "/images/rename7.jpg",
-  "/images/rename8.jpg",
-  // "/images/rename9.jpg",
-  // "/images/rename10.jpg",
+  "/images/rename8.jpg",  
 ];
 
 const ImgCard = () => {
@@ -127,7 +125,6 @@ const ImgCard = () => {
         </motion.div>
       </Box>
 
-      {/* Navigation Buttons */}
       <IconButton
         aria-label="Previous slide"
         icon={<ChevronLeft />}

@@ -231,7 +231,7 @@ const NavBarforOthers = () => {
                                     alignItems="center"
                                   >
                                     <Flex>
-                                      <Text fontSize="14px" fontWeight="600">
+                                      <Text fontSize="14px" fontWeight="600" textTransform={'capitalize'}>
                                         {item.title}
                                       </Text>
                                     </Flex>

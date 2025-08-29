@@ -26,13 +26,13 @@ const StorePage = () => {
     {
       id: 2,
       img: "/images/img17.jpg",
-      title: "Oman wor tawa",
+      title: "Skirt Ekpe yatata",
       price: "85,000 00",
     },
     {
       id: 3,
       img: "/images/img222.jpg",
-      title: "Oman wor tawa",
+      title: "Oman tinted.",
       price: "85,000 00",
     },
     {
@@ -50,7 +50,7 @@ const StorePage = () => {
     {
       id: 6,
       img: "/images/img14.jpg",
-      title: "Oman wor tawa",
+      title: "Oman tinted.",
       price: "85,000 00",
     },
   ];
@@ -103,14 +103,14 @@ const StorePage = () => {
                 <Image
                   objectFit="contain"
                   src={item.img}
-                  alt="Chakra UI"
+                  alt={item.title}
                   width={"100%"}
                   height={"100%"}
                 />
 
                 <CardFooter justify="space-between" flexWrap="wrap">
                   <Flex w={"100%"} flexDirection={"column"} gap="5px">
-                    <Text>{item.title}</Text>
+                    <Text fontSize={'md'} fontWeight={400} textTransform="capitalize">{item.title}</Text>
                     <Flex justifyContent={"space-between"} alignItems="center">
                       <Flex>
                         <Text fontSize={"16px"} fontWeight={500}>
@@ -124,10 +124,6 @@ const StorePage = () => {
                           color="white"
                           fontSize="16px"
                           fontWeight={500}
-                          // leftIcon={<ShoppingCart size={18} />}
-                          // onClick={() =>
-                          //   addToCart({ id: item.id, title: item.title, img: item.img, price: item.price })
-                          // }
                         >
                           Select Options
                         </Button>

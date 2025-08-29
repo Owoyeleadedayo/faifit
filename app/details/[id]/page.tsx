@@ -27,13 +27,13 @@ const productCard = [
   {
     id: 2,
     img: "/images/img17.jpg",
-    title: "Oman wor tawa",
+    title: "Skirt Ekpe yatata",
     price: 85000,
   },
   {
     id: 3,
     img: "/images/img222.jpg",
-    title: "Oman wor tawa",
+    title: "Oman tinted.",
     price: 85000,
   },
   {
@@ -51,7 +51,7 @@ const productCard = [
   {
     id: 6,
     img: "/images/img14.jpg",
-    title: "Oman wor tawa",
+    title: "Oman tinted.",
     price: 85000,
   },
 ];

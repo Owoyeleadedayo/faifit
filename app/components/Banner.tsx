@@ -28,9 +28,9 @@ const Banner = () => {
 >
   <Stack
     p={0}
-    lineHeight={10}
+    // lineHeight={10}
     alignItems="center"
-    spacing={{ base: "10px", md: "20px" }}
+    // spacing={{ base: "10px", md: "20px" }}
     zIndex={2}
   >
     <motion.div
@@ -50,7 +50,24 @@ const Banner = () => {
         FAI FIT
       </Text>
     </motion.div>
-    {/* Rest of Stack */}
+    <motion.div
+      initial={{ opacity: 0, y: 100 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.5, duration: 2, ease: "easeOut" }}
+    >
+      <Text
+        fontFamily="Montserrat"
+        fontSize={{ base: "xl", sm: "xl", md: "xl", lg: "xl" }} // Smaller on mobile
+        fontWeight={400}
+        color="white"
+        textAlign="center"
+        px={{ base: "20px", md: "0" }}
+        textShadow={{ base: "1px 1px 2px rgba(0, 0, 0, 0.5)", md: "none" }} // Shadow for mobile readability
+        textTransform="capitalize"
+      >
+       for women on the go
+      </Text>
+    </motion.div>
   </Stack>
 </Flex>
   );
