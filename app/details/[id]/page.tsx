@@ -89,6 +89,19 @@ export default function page() {
 
   const product = productCard.find((item) => item.id === Number(id));
 
+  const colorOptions = product?.id === 4 
+    ? [
+        { value: "green", label: "Green" },
+        { value: "orange", label: "Orange" },
+        { value: "black", label: "Black" },
+      ]
+    : [
+        { value: "pink", label: "Pink" },
+        { value: "blue", label: "Blue" },
+        { value: "orange", label: "Orange" },
+        { value: "black", label: "Black" },
+      ];
+
   if (!product) {
     return (
       <Flex w="100%" h="100vh" justify="center" align="center">
@@ -169,10 +182,11 @@ export default function page() {
                 value={selectedColor}
                 onChange={(e) => setSelectedColor(e.target.value)}
               >
-                <option value="pink">Pink</option>
-                <option value="blue">Blue</option>
-                <option value="orange">Orange</option>
-                <option value="black">Black</option>
+                {colorOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
               </Select>
             </Flex>
             <Flex

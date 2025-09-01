@@ -26,7 +26,7 @@ interface CartItem {
   id: number;
   title: string;
   img: string;
-  price: number; // Changed to number
+  price: number;
   quantity: number;
   color?: string;
   size?: string;
@@ -44,10 +44,9 @@ interface FormData {
 
 const CheckoutPage = () => {
   const { cart } = useCart();
-  console.log("Cart contents in CheckoutPage:", cart); // Debug cart
+  console.log("Cart contents in CheckoutPage:", cart);
   const toast = useToast();
 
-  // Form state
   const [formData, setFormData] = useState<FormData>({
     fullName: "",
     email: "",
@@ -58,17 +57,14 @@ const CheckoutPage = () => {
     postalCode: "",
   });
 
-  // Form errors
   const [errors, setErrors] = useState<Partial<FormData>>({});
 
-  // Handle form input changes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  // Validate form
   const validateForm = () => {
     const newErrors: Partial<FormData> = {};
     if (!formData.fullName) newErrors.fullName = "Full name is required";
@@ -83,7 +79,6 @@ const CheckoutPage = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
@@ -115,7 +110,6 @@ const CheckoutPage = () => {
     }
   };
 
-  // Calculate total price
   const totalPrice = cart
     .reduce((sum, item) => {
       const priceNum = item.price;
@@ -123,13 +117,33 @@ const CheckoutPage = () => {
         `Item ${item.id} price: ${item.price}, quantity: ${
           item.quantity
         }, subtotal: ${priceNum * item.quantity}`
-      ); // Debug
+      );
       return sum + priceNum * item.quantity;
     }, 0)
     .toLocaleString("en-NG", {
       style: "currency",
       currency: "NGN",
     });
+
+  // Generate WhatsApp message with order details
+  const generateWhatsAppMessage = () => {
+    const itemsList = cart
+      .map(
+        (item) =>
+          `- ${item.title} (Color: ${item.color || "N/A"}, Size: ${
+            item.size || "N/A"
+          }, Quantity: ${item.quantity}, Subtotal: ₦${(
+            item.price * item.quantity
+          ).toLocaleString()})`
+      )
+      .join("\n");
+    return encodeURIComponent(
+      `Hello, I have placed an order:\n\n${itemsList}\n\nTotal: ${totalPrice}\n\nPlease let me know where to send the proof of payment.`
+    );
+  };
+
+  // WhatsApp link with pre-filled message
+  const whatsappLink = `https://wa.me/+2348073938888?text=${generateWhatsAppMessage()}`;
 
   return (
     <>
@@ -298,6 +312,18 @@ const CheckoutPage = () => {
                       with proof of payment.
                     </Text>
                   </Box>
+                  <Button
+                      as="a"
+                      href={whatsappLink}
+                      target="_blank"
+                      bg="#25D366"
+                      color="white"
+                      mt={2}
+                      w="full"
+                      _hover={{ bg: "#20b958" }}
+                    >
+                      Contact via WhatsApp
+                    </Button>
                 </VStack>
               )}
             </VStack>
