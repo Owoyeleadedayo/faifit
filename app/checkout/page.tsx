@@ -145,7 +145,7 @@ const CheckoutPage = () => {
   };
 
   // WhatsApp link with pre-filled message
-  const whatsappLink = `https://wa.me/+2341234567890?text=${generateWhatsAppMessage()}`;
+  const whatsappLink = `https://wa.me/+2348073938888?text=${generateWhatsAppMessage()}`;
 
   // Non-editable message display
   const displayMessage = () => {
