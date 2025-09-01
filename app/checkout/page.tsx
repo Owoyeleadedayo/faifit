@@ -335,7 +335,7 @@ const CheckoutPage = () => {
                     </Text>
                     <Box mt={4} p={3} bg="gray.100" borderRadius="md">
                       <Text fontWeight="bold" mb={2}>
-                        Your Order Message (Do Not Edit):
+                        Your Order Message:
                       </Text>
                       <Text whiteSpace="pre-wrap" fontSize="sm">
                         {displayMessage()}
