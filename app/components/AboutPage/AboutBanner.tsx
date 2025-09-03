@@ -1,6 +1,7 @@
 "use client";
 
-import { Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text } from "@chakra-ui/react";
+import Image from "next/image";
 import Footer from "../Footer";
 
 const AboutBanner = () => {
@@ -20,7 +21,7 @@ const AboutBanner = () => {
         borderY="1px solid #e5e5e5"
         gap="10px"
       >
-        <Flex justifyContent="center" alignItems="center" pl={{base: 0, md: "100px", lg: "120px"}}>
+        <Flex justifyContent="center" alignItems="center" pl={{base: 0, md: "100px", lg: "100px"}}>
           <Text textAlign="center">About</Text>
         </Flex>
         <Flex justifyContent="center" alignItems="center" pl={{base: 0, md: "80px", lg:"80px"}}>
@@ -35,7 +36,8 @@ const AboutBanner = () => {
         width="100%"
         justifyContent="center"
         alignItems="center"
-        py="20px"
+        pt="20px"
+        pb={{base:0, sm: 0, md:"320px", lg:"350px"}}
         px={{base: '20px'}}
         // pl={{base: 0, md: "80px", lg:"80px"}}
         borderBottom="1px solid #e5e5e5"
@@ -51,6 +53,8 @@ const AboutBanner = () => {
           good and playing well go hand in hand.
         </Text>
       </Flex>
+
+      
 
       <Footer />
     </Flex>
