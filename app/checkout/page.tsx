@@ -325,9 +325,9 @@ const CheckoutPage = () => {
                     <Text fontWeight="bold" mb={2}>
                       Payment Instructions
                     </Text>
-                    <Text>Bank: Guaranty Trust Bank Plc</Text>
-                    <Text>Account Number: 0232738811</Text>
-                    <Text>Account Name: Ewa Wofai Egu</Text>
+                    <Text>Bank: Providus Bank</Text>
+                    <Text>Account Number: 1308249371</Text>
+                    <Text>Account Name: Faifit limited</Text>
                     <Text fontSize="sm" color="gray.600" mt={2}>
                       Please make payment to the above account and send proof of
                       payment via WhatsApp using the button above. Ensure the
