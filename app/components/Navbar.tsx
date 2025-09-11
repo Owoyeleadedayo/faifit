@@ -25,6 +25,7 @@ import {
   ReactNode,
   ReactPortal,
   useEffect,
+  useState,
 } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -45,6 +46,17 @@ const Navbar = () => {
   } = useDisclosure();
   const pathname = usePathname();
 
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 600); 
+    };
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const subtotal = cart.reduce(
@@ -62,6 +74,7 @@ const Navbar = () => {
     <>
       <Flex
         id="navBar"
+        className={scrolled ? "scroll" : ""}
         width="100%"
         bgColor="transparent"
         px={{ base: "20px", md: "30px", lg: "30px" }}

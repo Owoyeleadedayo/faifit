@@ -7,7 +7,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const images = [
   "/images/rename3.jpg",
-  "/images/rename4.jpg",
+  "/images/img21.jpg",
   "/images/rename5.jpeg",
   "/images/rename6.jpg",
   "/images/rename7.jpg",
